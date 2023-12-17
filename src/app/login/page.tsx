@@ -1,7 +1,7 @@
 const LoginPage = () => {
   return (
     <div>
-      <h1>Hello TypeScript Next-js Auth</h1>
+      <h1>Login Page</h1>
     </div>
   )
 }
