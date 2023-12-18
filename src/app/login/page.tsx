@@ -2,17 +2,25 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { axios } from "axios";
+import axios from "axios";
+
 
 const LoginPage = () => {
   const [user, setUser] = useState({
-    name: "",
-    email: "",
+       email: "",
     password: "",
   });
+  const router = useRouter()
 
   const handleSubmit = async()  => {
-    console.log(user)
+    try {
+      const res = await axios.post("/api/users/login", user)
+      if(res.status === 200){
+        router.push("/profile/12")
+      }
+    } catch (error :any) {
+      console.log(error)
+    }
 
   }
   return (
@@ -20,7 +28,7 @@ const LoginPage = () => {
       <h1>Sign Up Here</h1>
 
       <div>
-        <form className="flex flex-col" >
+        <div className="flex flex-col" >
          
 
           <label htmlFor="email">email</label>
@@ -44,9 +52,9 @@ const LoginPage = () => {
             }}
           />
 
-          <button onClick={()=>{handleSubmit}} className="border-2 border-red-200 rounded p-2 mt-2" type="submit">Login</button>
+          <button onClick={()=>{handleSubmit()}} className="border-2 border-red-200 rounded p-2 mt-2" >Login</button>
         <Link href="/signup">New Here?<span className="text-blue underline">Create an account</span></Link>
-        </form>
+        </div>
       </div>
     </div>
   );
