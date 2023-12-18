@@ -2,24 +2,54 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { axios } from "axios";
+import axios from "axios";
+
 
 const SignUp = () => {
+  const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
   const [user, setUser] = useState({
     name: "",
     email: "",
     password: "",
+    isVerified: false,
+    role: "user" 
   });
 
-  const handleSubmit = async () => {
-    console.log(user);
+  const handleSubmit = async (event:any) => {
+    event?.preventDefault()
+   try{
+    setIsLoading(true)
+    //Save User to Database
+    console.log(user)
+    const res = await axios.post("/api/users/signup", user)
+
+    if(res.status === 200){
+      router.push("/login")
+
+      setUser({
+        name: "",
+        email: "",
+        password: "",
+        isVerified: false,
+        role: "user",
+      })
+
+    setIsLoading(false)
+    }
+    
+    
+
+   }catch(err){
+    console.log(err)
+   }
   };
   return (
     <div className="h-screen w-screen flex justify-center items-center flex-col">
       <h1>Sign Up Here</h1>
 
       <div>
-        <form className="flex flex-col">
+        <form className="flex flex-col" onSubmit={handleSubmit}>
           <label htmlFor="name">Name</label>
           <input
             type="text"
@@ -53,11 +83,9 @@ const SignUp = () => {
           />
 
           <button
-            onClick={() => {
-              handleSubmit;
-            }}
+           type="submit"
             className="border-2 border-red-200 rounded p-2 mt-2"
-            type="submit"
+           disabled={isLoading}
           >
             Sign Up
           </button>

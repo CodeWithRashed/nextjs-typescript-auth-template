@@ -2,7 +2,9 @@ import mongoose, { connection } from "mongoose";
 
 export async function connect() {
     try{
-        mongoose.connect(process.env.DATABASE_URI!)
+        mongoose.connect(process.env.DATABASE_URI!, {
+            dbName: "next-authDb"
+        })
 
         //On Successful Connection
         connection.on("connected", ()=>{

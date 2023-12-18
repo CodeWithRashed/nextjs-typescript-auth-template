@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 
 export async function POST(request: NextRequest) {
   try {
+    connect()
     //Get Body Data
     const reqBody = await request.json();
     console.log(reqBody);
@@ -27,6 +28,8 @@ export async function POST(request: NextRequest) {
       name: reqBody.name,
       email: reqBody.email,
       password: hashedPass,
+      isVerified: reqBody.isVerified,
+      role: reqBody.role
     });
 
     //Saving User
