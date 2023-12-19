@@ -15,7 +15,7 @@ const LoginPage = () => {
     try {
       const res = await axios.post("/api/users/login", user);
       if (res.status === 200) {
-        router.push("/profile/12");
+        router.push("/profile");
       }
     } catch (error: any) {
       console.log(error);
