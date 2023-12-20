@@ -1,9 +1,18 @@
 "use client"
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const ProfilePage = () => {
   const router = useRouter();
+  // useEffect(()=>{
+  //   const verifyToken = async () =>{
+
+  //     const res = await axios.get("/api/users/verify");
+  //    console.log(res)
+  //   }
+  //   verifyToken()
+  // },[])
   const doLogout = async () => {
     try {
       const res = await axios.get("/api/users/logout");
