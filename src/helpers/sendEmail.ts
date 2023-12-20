@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import User from "@/models/userModels";
 import bcryptjs from "bcryptjs";
-import { verify } from "crypto";
+
 
 interface EmailParams {
   email: string;
@@ -9,12 +9,11 @@ interface EmailParams {
   userId: string;
 }
 
-enum EmailType {
-  VERIFY = "verify",
-  FORGOT = "forgot",
-}
+
 export const sendEmail = async ({ email, emailType, userId }: EmailParams) => {
   try {
+    console.log({ email, emailType, userId })
+    console.log( { _id: userId },)
     //Hashed User Value
     const hashedUser = await bcryptjs.hash(userId, 10);
 
@@ -65,6 +64,7 @@ export const sendEmail = async ({ email, emailType, userId }: EmailParams) => {
       }
 
       const emailResponse = await transport.sendMail(mailOption)
+      console.log(emailResponse)
   } catch (error: any) {
     throw new Error(error.message);
   }
